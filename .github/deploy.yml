@@ -1,0 +1,39 @@
+name: Deploy IndianRecipeAPP
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      #Checkout repo
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      #Setup nodejs
+      - name: SetUp Node.js
+        uses: actions/setup-node@v3
+        with: 
+          node-version: 18
+
+      #Install Dependencies
+      - name: Install Dependencies
+        uses: npm install
+
+      #Build the Project
+      - name: Build the Project
+        uses: npm run build
+
+      #Deploy the Project to GitHub Pages
+      - name: Deploy the Project
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
+ 
+        
+
+
